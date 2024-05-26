@@ -56,17 +56,6 @@ CMAKE_BINARY_DIR = /mnt/e/cxx_study/build
 #=============================================================================
 # Targets provided globally by CMake.
 
-# Special rule for the target rebuild_cache
-rebuild_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/usr/bin/cmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
-.PHONY : rebuild_cache
-
-# Special rule for the target rebuild_cache
-rebuild_cache/fast: rebuild_cache
-
-.PHONY : rebuild_cache/fast
-
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
@@ -78,16 +67,27 @@ edit_cache/fast: edit_cache
 
 .PHONY : edit_cache/fast
 
+# Special rule for the target rebuild_cache
+rebuild_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
+	/usr/bin/cmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+.PHONY : rebuild_cache
+
+# Special rule for the target rebuild_cache
+rebuild_cache/fast: rebuild_cache
+
+.PHONY : rebuild_cache/fast
+
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/e/cxx_study/build/CMakeFiles /mnt/e/cxx_study/build/CMakeFiles/progress.marks
-	$(MAKE) -f CMakeFiles/Makefile2 all
+	cd /mnt/e/cxx_study/build && $(CMAKE_COMMAND) -E cmake_progress_start /mnt/e/cxx_study/build/CMakeFiles /mnt/e/cxx_study/build/example/database/CMakeFiles/progress.marks
+	cd /mnt/e/cxx_study/build && $(MAKE) -f CMakeFiles/Makefile2 example/database/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/e/cxx_study/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	$(MAKE) -f CMakeFiles/Makefile2 clean
+	cd /mnt/e/cxx_study/build && $(MAKE) -f CMakeFiles/Makefile2 example/database/clean
 .PHONY : clean
 
 # The main clean target
@@ -97,70 +97,60 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	$(MAKE) -f CMakeFiles/Makefile2 preinstall
+	cd /mnt/e/cxx_study/build && $(MAKE) -f CMakeFiles/Makefile2 example/database/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	$(MAKE) -f CMakeFiles/Makefile2 preinstall
+	cd /mnt/e/cxx_study/build && $(MAKE) -f CMakeFiles/Makefile2 example/database/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /mnt/e/cxx_study/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
-#=============================================================================
-# Target rules for targets named utils
+# Convenience name for target.
+example/database/CMakeFiles/dbTest.dir/rule:
+	cd /mnt/e/cxx_study/build && $(MAKE) -f CMakeFiles/Makefile2 example/database/CMakeFiles/dbTest.dir/rule
+.PHONY : example/database/CMakeFiles/dbTest.dir/rule
 
-# Build rule for target.
-utils: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 utils
-.PHONY : utils
+# Convenience name for target.
+dbTest: example/database/CMakeFiles/dbTest.dir/rule
 
-# fast build rule for target.
-utils/fast:
-	$(MAKE) -f src/CMakeFiles/utils.dir/build.make src/CMakeFiles/utils.dir/build
-.PHONY : utils/fast
-
-#=============================================================================
-# Target rules for targets named client
-
-# Build rule for target.
-client: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 client
-.PHONY : client
-
-# fast build rule for target.
-client/fast:
-	$(MAKE) -f example/client/CMakeFiles/client.dir/build.make example/client/CMakeFiles/client.dir/build
-.PHONY : client/fast
-
-#=============================================================================
-# Target rules for targets named server
-
-# Build rule for target.
-server: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 server
-.PHONY : server
-
-# fast build rule for target.
-server/fast:
-	$(MAKE) -f example/server/CMakeFiles/server.dir/build.make example/server/CMakeFiles/server.dir/build
-.PHONY : server/fast
-
-#=============================================================================
-# Target rules for targets named dbTest
-
-# Build rule for target.
-dbTest: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 dbTest
 .PHONY : dbTest
 
 # fast build rule for target.
 dbTest/fast:
-	$(MAKE) -f example/database/CMakeFiles/dbTest.dir/build.make example/database/CMakeFiles/dbTest.dir/build
+	cd /mnt/e/cxx_study/build && $(MAKE) -f example/database/CMakeFiles/dbTest.dir/build.make example/database/CMakeFiles/dbTest.dir/build
 .PHONY : dbTest/fast
+
+dbTest.o: dbTest.cc.o
+
+.PHONY : dbTest.o
+
+# target to build an object file
+dbTest.cc.o:
+	cd /mnt/e/cxx_study/build && $(MAKE) -f example/database/CMakeFiles/dbTest.dir/build.make example/database/CMakeFiles/dbTest.dir/dbTest.cc.o
+.PHONY : dbTest.cc.o
+
+dbTest.i: dbTest.cc.i
+
+.PHONY : dbTest.i
+
+# target to preprocess a source file
+dbTest.cc.i:
+	cd /mnt/e/cxx_study/build && $(MAKE) -f example/database/CMakeFiles/dbTest.dir/build.make example/database/CMakeFiles/dbTest.dir/dbTest.cc.i
+.PHONY : dbTest.cc.i
+
+dbTest.s: dbTest.cc.s
+
+.PHONY : dbTest.s
+
+# target to generate assembly for a file
+dbTest.cc.s:
+	cd /mnt/e/cxx_study/build && $(MAKE) -f example/database/CMakeFiles/dbTest.dir/build.make example/database/CMakeFiles/dbTest.dir/dbTest.cc.s
+.PHONY : dbTest.cc.s
 
 # Help Target
 help:
@@ -168,12 +158,12 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
-	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... utils"
-	@echo "... client"
-	@echo "... server"
+	@echo "... rebuild_cache"
 	@echo "... dbTest"
+	@echo "... dbTest.o"
+	@echo "... dbTest.i"
+	@echo "... dbTest.s"
 .PHONY : help
 
 
@@ -185,6 +175,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /mnt/e/cxx_study/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

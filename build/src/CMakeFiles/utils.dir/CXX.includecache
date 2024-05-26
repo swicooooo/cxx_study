@@ -32,6 +32,12 @@ stdlib.h
 fcntl.h
 -
 
+/mnt/e/cxx_study/src/database/mysql.cpp
+database/mysql.h
+/mnt/e/cxx_study/src/database/database/mysql.h
+mymuduo/Logger.h
+-
+
 /mnt/e/cxx_study/src/filetransfer/filetransfer.cpp
 filetransfer/filetransfer.h
 /mnt/e/cxx_study/src/filetransfer/filetransfer/filetransfer.h

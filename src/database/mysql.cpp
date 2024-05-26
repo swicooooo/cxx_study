@@ -3,10 +3,10 @@
 #include <mymuduo/Logger.h>
 
 MySQL::MySQL(std::string dbname, std::string server, std::string user, std::string password)
-    :   server_(server),
+    :   dbname_(dbname),
+        server_(server),
         user_(user),
-        password_(password),
-        dbname_(dbname)
+        password_(password)
 {
     conn_ = mysql_init(nullptr);    // nor not mysql_init(conn_)
 }
@@ -24,7 +24,7 @@ bool MySQL::connect()
     MYSQL *p = mysql_real_connect(conn_,server_.c_str(),user_.c_str(),password_.c_str(),dbname_.c_str(),3306,nullptr,0);
     if(p == nullptr) 
     {
-        LOG_ERROR("%s:%d: mysql connect error",__FILE__,__LINE__);
+        LOG_ERROR("%s:%d: mysql connect error: %s",__FILE__,__LINE__, mysql_error(conn_));
     }
     return p;
 }

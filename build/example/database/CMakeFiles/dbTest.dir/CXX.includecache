@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../include/database/mysql.h
+string
+-
+mysql/mysql.h
+-
+
+/mnt/e/cxx_study/example/database/dbTest.cc
+database/mysql.h
+/mnt/e/cxx_study/example/database/database/mysql.h
+memory
+-
+

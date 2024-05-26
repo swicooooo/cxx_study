@@ -18,5 +18,10 @@
   "directory": "/mnt/e/cxx_study/build/example/server",
   "command": "/usr/bin/g++   -I/mnt/e/cxx_study/include  -g -g   -o CMakeFiles/server.dir/fileserver.cc.o -c /mnt/e/cxx_study/example/server/fileserver.cc",
   "file": "/mnt/e/cxx_study/example/server/fileserver.cc"
+},
+{
+  "directory": "/mnt/e/cxx_study/build/example/database",
+  "command": "/usr/bin/g++   -I/mnt/e/cxx_study/include  -g -g   -o CMakeFiles/dbTest.dir/dbTest.cc.o -c /mnt/e/cxx_study/example/database/dbTest.cc",
+  "file": "/mnt/e/cxx_study/example/database/dbTest.cc"
 }
 ]

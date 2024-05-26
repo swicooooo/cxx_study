@@ -1,0 +1,1 @@
+/usr/bin/g++  -g -g   CMakeFiles/dbTest.dir/dbTest.cc.o  -o ../../../bin/dbTest  -Wl,-rpath,/mnt/e/cxx_study/lib ../../../lib/libutils.so -lpthread 
