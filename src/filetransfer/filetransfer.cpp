@@ -35,7 +35,7 @@ int filetransfer::recvPacket(int sockfd, void *buf, int size)
 
 filetransferServer::filetransferServer()
 {
-    mysql_ = std::make_unique<MySQL>(new MySQL("file"));
+    mysql_ = std::make_unique<MySQL>(MySQL("file"));
 }
 
 /**
@@ -183,7 +183,7 @@ void filetransferServer::recvClientSendBlock(uint64_t &recvsize)
         blocknum_++;
         recvsize += writesize;
 
-        printf("recvsize: %d, filesize: %d", recvsize, filesize_);
+        printf("recvsize: %ld, filesize: %ld", recvsize, filesize_);
         if(recvsize == filesize_)
         {
             // 接收完成
@@ -251,6 +251,7 @@ void filetransferServer::updateFileState(uint64_t &recvsize, const std::vector<s
 
 void filetransferClient::uploadFile(int sockfd, const std::string &path)
 {
+     printf("uploadFile start...!\n");
     sockfd_ = sockfd;
     // 获取文件大小
     auto filesize = this->getFileSize(path);
@@ -277,14 +278,14 @@ void filetransferClient::uploadFile(int sockfd, const std::string &path)
     char buf[1024] = {0};
     ret_ = recvPacket(sockfd, buf, 1024);
     CheckErr(ret_, "RecvPacket err");
+
     // 从DataPacket中取出服务端传递给客户端的数据
     struct DataPacket *dp = (DataPacket*)buf;
     struct UploadFileAck uploadfileack;
     memcpy(&uploadfileack, dp->data, dp->datalen);
 
-    // 
+    // 通过服务端返回的传输类型发送数据块
     this->sendBlockByType(uploadfileack, totalblock, path);
-
 }
 
 uint64_t filetransferClient::getFileSize(const std::string &path)
@@ -341,8 +342,6 @@ void filetransferClient::sendBlockByType(const struct UploadFileAck &uploadfilea
                             "file transfer was completed!":
                             "file transfer was occurred error!";
         printf("file message: %s", res.c_str());
-        break;
-    default:
         break;
     }
 }

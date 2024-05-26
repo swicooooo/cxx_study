@@ -1,22 +1,22 @@
 [
 {
   "directory": "/mnt/e/cxx_study/build/src",
-  "command": "/usr/bin/g++   -I/mnt/e/cxx_study/include  -g -g   -o CMakeFiles/main.dir/filetransfer.cpp.o -c /mnt/e/cxx_study/src/filetransfer.cpp",
-  "file": "/mnt/e/cxx_study/src/filetransfer.cpp"
+  "command": "/usr/bin/g++  -Dutils_EXPORTS -I/mnt/e/cxx_study/include  -g -g -fPIC   -o CMakeFiles/utils.dir/database/mysql.cpp.o -c /mnt/e/cxx_study/src/database/mysql.cpp",
+  "file": "/mnt/e/cxx_study/src/database/mysql.cpp"
 },
 {
   "directory": "/mnt/e/cxx_study/build/src",
-  "command": "/usr/bin/g++   -I/mnt/e/cxx_study/include  -g -g   -o CMakeFiles/main.dir/single_upload.cpp.o -c /mnt/e/cxx_study/src/single_upload.cpp",
-  "file": "/mnt/e/cxx_study/src/single_upload.cpp"
+  "command": "/usr/bin/g++  -Dutils_EXPORTS -I/mnt/e/cxx_study/include  -g -g -fPIC   -o CMakeFiles/utils.dir/filetransfer/filetransfer.cpp.o -c /mnt/e/cxx_study/src/filetransfer/filetransfer.cpp",
+  "file": "/mnt/e/cxx_study/src/filetransfer/filetransfer.cpp"
 },
 {
-  "directory": "/mnt/e/cxx_study/build/example",
-  "command": "/usr/bin/g++   -I/mnt/e/cxx_study/include  -g -g   -o CMakeFiles/exam.dir/fileclient.cc.o -c /mnt/e/cxx_study/example/fileclient.cc",
-  "file": "/mnt/e/cxx_study/example/fileclient.cc"
+  "directory": "/mnt/e/cxx_study/build/example/client",
+  "command": "/usr/bin/g++   -I/mnt/e/cxx_study/include  -g -g   -o CMakeFiles/client.dir/fileclient.cc.o -c /mnt/e/cxx_study/example/client/fileclient.cc",
+  "file": "/mnt/e/cxx_study/example/client/fileclient.cc"
 },
 {
-  "directory": "/mnt/e/cxx_study/build/example",
-  "command": "/usr/bin/g++   -I/mnt/e/cxx_study/include  -g -g   -o CMakeFiles/exam.dir/fileserver.cc.o -c /mnt/e/cxx_study/example/fileserver.cc",
-  "file": "/mnt/e/cxx_study/example/fileserver.cc"
+  "directory": "/mnt/e/cxx_study/build/example/server",
+  "command": "/usr/bin/g++   -I/mnt/e/cxx_study/include  -g -g   -o CMakeFiles/server.dir/fileserver.cc.o -c /mnt/e/cxx_study/example/server/fileserver.cc",
+  "file": "/mnt/e/cxx_study/example/server/fileserver.cc"
 }
 ]

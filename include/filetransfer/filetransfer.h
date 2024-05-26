@@ -3,6 +3,7 @@
 #include "database/mysql.h"
 #include "public.h"
 
+#include <vector>
 #include <memory>
 
 /**

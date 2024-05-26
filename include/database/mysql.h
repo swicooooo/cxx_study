@@ -6,7 +6,7 @@
 class MySQL
 {
 public:
-    MySQL(std::string server = "127.0.0.1", std::string user = "root", std::string password = "0", std::string dbname);
+    MySQL(std::string dbname, std::string server = "127.0.0.1", std::string user = "root", std::string password = "0");
     ~MySQL();
     bool connect();   
     bool update(std::string sql);

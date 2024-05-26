@@ -111,73 +111,73 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
-src/CMakeFiles/main.dir/rule:
-	cd /mnt/e/cxx_study/build && $(MAKE) -f CMakeFiles/Makefile2 src/CMakeFiles/main.dir/rule
-.PHONY : src/CMakeFiles/main.dir/rule
+src/CMakeFiles/utils.dir/rule:
+	cd /mnt/e/cxx_study/build && $(MAKE) -f CMakeFiles/Makefile2 src/CMakeFiles/utils.dir/rule
+.PHONY : src/CMakeFiles/utils.dir/rule
 
 # Convenience name for target.
-main: src/CMakeFiles/main.dir/rule
+utils: src/CMakeFiles/utils.dir/rule
 
-.PHONY : main
+.PHONY : utils
 
 # fast build rule for target.
-main/fast:
-	cd /mnt/e/cxx_study/build && $(MAKE) -f src/CMakeFiles/main.dir/build.make src/CMakeFiles/main.dir/build
-.PHONY : main/fast
+utils/fast:
+	cd /mnt/e/cxx_study/build && $(MAKE) -f src/CMakeFiles/utils.dir/build.make src/CMakeFiles/utils.dir/build
+.PHONY : utils/fast
 
-filetransfer.o: filetransfer.cpp.o
+database/mysql.o: database/mysql.cpp.o
 
-.PHONY : filetransfer.o
-
-# target to build an object file
-filetransfer.cpp.o:
-	cd /mnt/e/cxx_study/build && $(MAKE) -f src/CMakeFiles/main.dir/build.make src/CMakeFiles/main.dir/filetransfer.cpp.o
-.PHONY : filetransfer.cpp.o
-
-filetransfer.i: filetransfer.cpp.i
-
-.PHONY : filetransfer.i
-
-# target to preprocess a source file
-filetransfer.cpp.i:
-	cd /mnt/e/cxx_study/build && $(MAKE) -f src/CMakeFiles/main.dir/build.make src/CMakeFiles/main.dir/filetransfer.cpp.i
-.PHONY : filetransfer.cpp.i
-
-filetransfer.s: filetransfer.cpp.s
-
-.PHONY : filetransfer.s
-
-# target to generate assembly for a file
-filetransfer.cpp.s:
-	cd /mnt/e/cxx_study/build && $(MAKE) -f src/CMakeFiles/main.dir/build.make src/CMakeFiles/main.dir/filetransfer.cpp.s
-.PHONY : filetransfer.cpp.s
-
-single_upload.o: single_upload.cpp.o
-
-.PHONY : single_upload.o
+.PHONY : database/mysql.o
 
 # target to build an object file
-single_upload.cpp.o:
-	cd /mnt/e/cxx_study/build && $(MAKE) -f src/CMakeFiles/main.dir/build.make src/CMakeFiles/main.dir/single_upload.cpp.o
-.PHONY : single_upload.cpp.o
+database/mysql.cpp.o:
+	cd /mnt/e/cxx_study/build && $(MAKE) -f src/CMakeFiles/utils.dir/build.make src/CMakeFiles/utils.dir/database/mysql.cpp.o
+.PHONY : database/mysql.cpp.o
 
-single_upload.i: single_upload.cpp.i
+database/mysql.i: database/mysql.cpp.i
 
-.PHONY : single_upload.i
+.PHONY : database/mysql.i
 
 # target to preprocess a source file
-single_upload.cpp.i:
-	cd /mnt/e/cxx_study/build && $(MAKE) -f src/CMakeFiles/main.dir/build.make src/CMakeFiles/main.dir/single_upload.cpp.i
-.PHONY : single_upload.cpp.i
+database/mysql.cpp.i:
+	cd /mnt/e/cxx_study/build && $(MAKE) -f src/CMakeFiles/utils.dir/build.make src/CMakeFiles/utils.dir/database/mysql.cpp.i
+.PHONY : database/mysql.cpp.i
 
-single_upload.s: single_upload.cpp.s
+database/mysql.s: database/mysql.cpp.s
 
-.PHONY : single_upload.s
+.PHONY : database/mysql.s
 
 # target to generate assembly for a file
-single_upload.cpp.s:
-	cd /mnt/e/cxx_study/build && $(MAKE) -f src/CMakeFiles/main.dir/build.make src/CMakeFiles/main.dir/single_upload.cpp.s
-.PHONY : single_upload.cpp.s
+database/mysql.cpp.s:
+	cd /mnt/e/cxx_study/build && $(MAKE) -f src/CMakeFiles/utils.dir/build.make src/CMakeFiles/utils.dir/database/mysql.cpp.s
+.PHONY : database/mysql.cpp.s
+
+filetransfer/filetransfer.o: filetransfer/filetransfer.cpp.o
+
+.PHONY : filetransfer/filetransfer.o
+
+# target to build an object file
+filetransfer/filetransfer.cpp.o:
+	cd /mnt/e/cxx_study/build && $(MAKE) -f src/CMakeFiles/utils.dir/build.make src/CMakeFiles/utils.dir/filetransfer/filetransfer.cpp.o
+.PHONY : filetransfer/filetransfer.cpp.o
+
+filetransfer/filetransfer.i: filetransfer/filetransfer.cpp.i
+
+.PHONY : filetransfer/filetransfer.i
+
+# target to preprocess a source file
+filetransfer/filetransfer.cpp.i:
+	cd /mnt/e/cxx_study/build && $(MAKE) -f src/CMakeFiles/utils.dir/build.make src/CMakeFiles/utils.dir/filetransfer/filetransfer.cpp.i
+.PHONY : filetransfer/filetransfer.cpp.i
+
+filetransfer/filetransfer.s: filetransfer/filetransfer.cpp.s
+
+.PHONY : filetransfer/filetransfer.s
+
+# target to generate assembly for a file
+filetransfer/filetransfer.cpp.s:
+	cd /mnt/e/cxx_study/build && $(MAKE) -f src/CMakeFiles/utils.dir/build.make src/CMakeFiles/utils.dir/filetransfer/filetransfer.cpp.s
+.PHONY : filetransfer/filetransfer.cpp.s
 
 # Help Target
 help:
@@ -187,13 +187,13 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... main"
-	@echo "... filetransfer.o"
-	@echo "... filetransfer.i"
-	@echo "... filetransfer.s"
-	@echo "... single_upload.o"
-	@echo "... single_upload.i"
-	@echo "... single_upload.s"
+	@echo "... utils"
+	@echo "... database/mysql.o"
+	@echo "... database/mysql.i"
+	@echo "... database/mysql.s"
+	@echo "... filetransfer/filetransfer.o"
+	@echo "... filetransfer/filetransfer.i"
+	@echo "... filetransfer/filetransfer.s"
 .PHONY : help
 
 

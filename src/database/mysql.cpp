@@ -1,8 +1,8 @@
-#include "mysql.h"
+#include "database/mysql.h"
 
 #include <mymuduo/Logger.h>
 
-MySQL::MySQL(std::string server, std::string user, std::string password, std::string dbname)
+MySQL::MySQL(std::string dbname, std::string server, std::string user, std::string password)
     :   server_(server),
         user_(user),
         password_(password),

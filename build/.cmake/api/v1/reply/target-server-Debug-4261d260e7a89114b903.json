@@ -2,7 +2,7 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "/mnt/e/cxx_study/bin/exam"
+			"path" : "/mnt/e/cxx_study/bin/server"
 		}
 	],
 	"backtrace" : 1,
@@ -11,11 +11,12 @@
 		"commands" : 
 		[
 			"add_executable",
+			"add_dependencies",
 			"include_directories"
 		],
 		"files" : 
 		[
-			"example/CMakeLists.txt",
+			"example/server/CMakeLists.txt",
 			"CMakeLists.txt"
 		],
 		"nodes" : 
@@ -30,13 +31,19 @@
 				"parent" : 0
 			},
 			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 6,
+				"parent" : 0
+			},
+			{
 				"file" : 1
 			},
 			{
-				"command" : 1,
+				"command" : 2,
 				"file" : 1,
 				"line" : 9,
-				"parent" : 2
+				"parent" : 3
 			}
 		]
 	},
@@ -52,19 +59,25 @@
 			"includes" : 
 			[
 				{
-					"backtrace" : 3,
+					"backtrace" : 4,
 					"path" : "/mnt/e/cxx_study/include"
 				}
 			],
 			"language" : "CXX",
 			"sourceIndexes" : 
 			[
-				0,
-				1
+				0
 			]
 		}
 	],
-	"id" : "exam::@70983d692f648185febe",
+	"dependencies" : 
+	[
+		{
+			"backtrace" : 2,
+			"id" : "utils::@145eef247bfb46b6828c"
+		}
+	],
+	"id" : "server::@9a75c32a50fbfe4920f2",
 	"link" : 
 	{
 		"commandFragments" : 
@@ -76,16 +89,32 @@
 			{
 				"fragment" : "",
 				"role" : "flags"
+			},
+			{
+				"fragment" : "-L/mnt/e/cxx_study/lib",
+				"role" : "libraryPath"
+			},
+			{
+				"fragment" : "-Wl,-rpath,/mnt/e/cxx_study/lib",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-lutils",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-lpthread",
+				"role" : "libraries"
 			}
 		],
 		"language" : "CXX"
 	},
-	"name" : "exam",
-	"nameOnDisk" : "exam",
+	"name" : "server",
+	"nameOnDisk" : "server",
 	"paths" : 
 	{
-		"build" : "example",
-		"source" : "example"
+		"build" : "example/server",
+		"source" : "example/server"
 	},
 	"sourceGroups" : 
 	[
@@ -93,8 +122,7 @@
 			"name" : "Source Files",
 			"sourceIndexes" : 
 			[
-				0,
-				1
+				0
 			]
 		}
 	],
@@ -103,13 +131,7 @@
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "example/fileclient.cc",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "example/fileserver.cc",
+			"path" : "example/server/fileserver.cc",
 			"sourceGroupIndex" : 0
 		}
 	],

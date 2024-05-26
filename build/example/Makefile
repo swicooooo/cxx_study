@@ -110,75 +110,6 @@ depend:
 	cd /mnt/e/cxx_study/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
-# Convenience name for target.
-example/CMakeFiles/exam.dir/rule:
-	cd /mnt/e/cxx_study/build && $(MAKE) -f CMakeFiles/Makefile2 example/CMakeFiles/exam.dir/rule
-.PHONY : example/CMakeFiles/exam.dir/rule
-
-# Convenience name for target.
-exam: example/CMakeFiles/exam.dir/rule
-
-.PHONY : exam
-
-# fast build rule for target.
-exam/fast:
-	cd /mnt/e/cxx_study/build && $(MAKE) -f example/CMakeFiles/exam.dir/build.make example/CMakeFiles/exam.dir/build
-.PHONY : exam/fast
-
-fileclient.o: fileclient.cc.o
-
-.PHONY : fileclient.o
-
-# target to build an object file
-fileclient.cc.o:
-	cd /mnt/e/cxx_study/build && $(MAKE) -f example/CMakeFiles/exam.dir/build.make example/CMakeFiles/exam.dir/fileclient.cc.o
-.PHONY : fileclient.cc.o
-
-fileclient.i: fileclient.cc.i
-
-.PHONY : fileclient.i
-
-# target to preprocess a source file
-fileclient.cc.i:
-	cd /mnt/e/cxx_study/build && $(MAKE) -f example/CMakeFiles/exam.dir/build.make example/CMakeFiles/exam.dir/fileclient.cc.i
-.PHONY : fileclient.cc.i
-
-fileclient.s: fileclient.cc.s
-
-.PHONY : fileclient.s
-
-# target to generate assembly for a file
-fileclient.cc.s:
-	cd /mnt/e/cxx_study/build && $(MAKE) -f example/CMakeFiles/exam.dir/build.make example/CMakeFiles/exam.dir/fileclient.cc.s
-.PHONY : fileclient.cc.s
-
-fileserver.o: fileserver.cc.o
-
-.PHONY : fileserver.o
-
-# target to build an object file
-fileserver.cc.o:
-	cd /mnt/e/cxx_study/build && $(MAKE) -f example/CMakeFiles/exam.dir/build.make example/CMakeFiles/exam.dir/fileserver.cc.o
-.PHONY : fileserver.cc.o
-
-fileserver.i: fileserver.cc.i
-
-.PHONY : fileserver.i
-
-# target to preprocess a source file
-fileserver.cc.i:
-	cd /mnt/e/cxx_study/build && $(MAKE) -f example/CMakeFiles/exam.dir/build.make example/CMakeFiles/exam.dir/fileserver.cc.i
-.PHONY : fileserver.cc.i
-
-fileserver.s: fileserver.cc.s
-
-.PHONY : fileserver.s
-
-# target to generate assembly for a file
-fileserver.cc.s:
-	cd /mnt/e/cxx_study/build && $(MAKE) -f example/CMakeFiles/exam.dir/build.make example/CMakeFiles/exam.dir/fileserver.cc.s
-.PHONY : fileserver.cc.s
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -187,13 +118,6 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... exam"
-	@echo "... fileclient.o"
-	@echo "... fileclient.i"
-	@echo "... fileclient.s"
-	@echo "... fileserver.o"
-	@echo "... fileserver.i"
-	@echo "... fileserver.s"
 .PHONY : help
 
 

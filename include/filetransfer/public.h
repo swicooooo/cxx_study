@@ -9,10 +9,11 @@
 // 全局检查错误
 #define CheckErr(ret, str) \
     do \
-    { \
-        if (ret < 0) \
+    {  \
+        if (ret < 0)    \
         { \
             printf("%s:%d error message is: %s\n", __FILE__, __LINE__, str);  \
+            exit(-1);    \
         } \
     } while(0);
 

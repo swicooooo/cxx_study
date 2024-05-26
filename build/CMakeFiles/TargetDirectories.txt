@@ -2,7 +2,12 @@
 /mnt/e/cxx_study/build/CMakeFiles/edit_cache.dir
 /mnt/e/cxx_study/build/src/CMakeFiles/rebuild_cache.dir
 /mnt/e/cxx_study/build/src/CMakeFiles/edit_cache.dir
-/mnt/e/cxx_study/build/src/CMakeFiles/main.dir
+/mnt/e/cxx_study/build/src/CMakeFiles/utils.dir
 /mnt/e/cxx_study/build/example/CMakeFiles/rebuild_cache.dir
 /mnt/e/cxx_study/build/example/CMakeFiles/edit_cache.dir
-/mnt/e/cxx_study/build/example/CMakeFiles/exam.dir
+/mnt/e/cxx_study/build/example/client/CMakeFiles/rebuild_cache.dir
+/mnt/e/cxx_study/build/example/client/CMakeFiles/edit_cache.dir
+/mnt/e/cxx_study/build/example/client/CMakeFiles/client.dir
+/mnt/e/cxx_study/build/example/server/CMakeFiles/rebuild_cache.dir
+/mnt/e/cxx_study/build/example/server/CMakeFiles/edit_cache.dir
+/mnt/e/cxx_study/build/example/server/CMakeFiles/server.dir

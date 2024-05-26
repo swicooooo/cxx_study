@@ -111,30 +111,43 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named main
+# Target rules for targets named utils
 
 # Build rule for target.
-main: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 main
-.PHONY : main
+utils: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 utils
+.PHONY : utils
 
 # fast build rule for target.
-main/fast:
-	$(MAKE) -f src/CMakeFiles/main.dir/build.make src/CMakeFiles/main.dir/build
-.PHONY : main/fast
+utils/fast:
+	$(MAKE) -f src/CMakeFiles/utils.dir/build.make src/CMakeFiles/utils.dir/build
+.PHONY : utils/fast
 
 #=============================================================================
-# Target rules for targets named exam
+# Target rules for targets named client
 
 # Build rule for target.
-exam: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 exam
-.PHONY : exam
+client: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 client
+.PHONY : client
 
 # fast build rule for target.
-exam/fast:
-	$(MAKE) -f example/CMakeFiles/exam.dir/build.make example/CMakeFiles/exam.dir/build
-.PHONY : exam/fast
+client/fast:
+	$(MAKE) -f example/client/CMakeFiles/client.dir/build.make example/client/CMakeFiles/client.dir/build
+.PHONY : client/fast
+
+#=============================================================================
+# Target rules for targets named server
+
+# Build rule for target.
+server: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 server
+.PHONY : server
+
+# fast build rule for target.
+server/fast:
+	$(MAKE) -f example/server/CMakeFiles/server.dir/build.make example/server/CMakeFiles/server.dir/build
+.PHONY : server/fast
 
 # Help Target
 help:
@@ -144,8 +157,9 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... main"
-	@echo "... exam"
+	@echo "... utils"
+	@echo "... client"
+	@echo "... server"
 .PHONY : help
 
 

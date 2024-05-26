@@ -29,21 +29,50 @@
 					"source" : "src",
 					"targetIndexes" : 
 					[
-						1
+						2
 					]
 				},
 				{
 					"build" : "example",
+					"childIndexes" : 
+					[
+						3,
+						4
+					],
 					"minimumCMakeVersion" : 
 					{
 						"string" : "3.16.3"
 					},
 					"parentIndex" : 0,
 					"projectIndex" : 0,
-					"source" : "example",
+					"source" : "example"
+				},
+				{
+					"build" : "example/client",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16.3"
+					},
+					"parentIndex" : 2,
+					"projectIndex" : 0,
+					"source" : "example/client",
 					"targetIndexes" : 
 					[
 						0
+					]
+				},
+				{
+					"build" : "example/server",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16.3"
+					},
+					"parentIndex" : 2,
+					"projectIndex" : 0,
+					"source" : "example/server",
+					"targetIndexes" : 
+					[
+						1
 					]
 				}
 			],
@@ -55,30 +84,40 @@
 					[
 						0,
 						1,
-						2
+						2,
+						3,
+						4
 					],
 					"name" : "project",
 					"targetIndexes" : 
 					[
 						0,
-						1
+						1,
+						2
 					]
 				}
 			],
 			"targets" : 
 			[
 				{
-					"directoryIndex" : 2,
-					"id" : "exam::@70983d692f648185febe",
-					"jsonFile" : "target-exam-Debug-9b613fdbd2c517b7ad8a.json",
-					"name" : "exam",
+					"directoryIndex" : 3,
+					"id" : "client::@cd3424c3631ca74c7c32",
+					"jsonFile" : "target-client-Debug-aa9927231c4ef017e624.json",
+					"name" : "client",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "server::@9a75c32a50fbfe4920f2",
+					"jsonFile" : "target-server-Debug-4261d260e7a89114b903.json",
+					"name" : "server",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 1,
-					"id" : "main::@145eef247bfb46b6828c",
-					"jsonFile" : "target-main-Debug-9b4baed37e6100b5c88e.json",
-					"name" : "main",
+					"id" : "utils::@145eef247bfb46b6828c",
+					"jsonFile" : "target-utils-Debug-31207cc4b48e8475271b.json",
+					"name" : "utils",
 					"projectIndex" : 0
 				}
 			]
