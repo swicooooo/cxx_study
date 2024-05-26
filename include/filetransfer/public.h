@@ -35,12 +35,13 @@ enum FileType
     TYPE_EXIST,     // 文件已经存在
 };
 
+// 结构体和字符数组可以强制转换
 // struct存储的成员数据是连续的，但是会根据字节对齐而改变总大小
 struct DataPacket
 {
     int datalen;            // 弹性数组数据长度
     enum OperType type;     // 当前数据包代表的操作类型 
-    char data[0];           // 存储相应操作下的数据内容，初始长度为0
+    char data[0];           // 存储可变TransferFile数据
 };
 
 // 上传文件
@@ -54,7 +55,7 @@ struct UploadFile
 // 文件上传响应
 struct UploadFileAck
 {
-    FileType type;
+    enum FileType type;
     int blockno;
 };
 

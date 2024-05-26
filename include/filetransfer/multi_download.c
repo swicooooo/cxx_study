@@ -185,12 +185,12 @@ int download(const char *url, const char *filename)
     return 0;
 }
 
-int main(int argc, char const *argv[])
-{
-    // 8.1M---md5sum检测
-    // c0a3cc386a7db943c8a09236ea4501d8  ubuntu.iso.zsync
-    // c0a3cc386a7db943c8a09236ea4501d8  orgin-ubuntu.iso.zsync
-    const char *url = "https://releases.ubuntu.com/focal/ubuntu-20.04.6-desktop-amd64.iso.zsync";
-    const char *filename = "ubuntu.iso.zsync";
-    return download(url, filename);
-}
+// int main(int argc, char const *argv[])
+// {
+//     // 8.1M---md5sum检测
+//     // c0a3cc386a7db943c8a09236ea4501d8  ubuntu.iso.zsync
+//     // c0a3cc386a7db943c8a09236ea4501d8  orgin-ubuntu.iso.zsync
+//     const char *url = "https://releases.ubuntu.com/focal/ubuntu-20.04.6-desktop-amd64.iso.zsync";
+//     const char *filename = "ubuntu.iso.zsync";
+//     return download(url, filename);
+// }

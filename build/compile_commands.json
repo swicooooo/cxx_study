@@ -1,0 +1,22 @@
+[
+{
+  "directory": "/mnt/e/cxx_study/build/src",
+  "command": "/usr/bin/g++   -I/mnt/e/cxx_study/include  -g -g   -o CMakeFiles/main.dir/filetransfer.cpp.o -c /mnt/e/cxx_study/src/filetransfer.cpp",
+  "file": "/mnt/e/cxx_study/src/filetransfer.cpp"
+},
+{
+  "directory": "/mnt/e/cxx_study/build/src",
+  "command": "/usr/bin/g++   -I/mnt/e/cxx_study/include  -g -g   -o CMakeFiles/main.dir/single_upload.cpp.o -c /mnt/e/cxx_study/src/single_upload.cpp",
+  "file": "/mnt/e/cxx_study/src/single_upload.cpp"
+},
+{
+  "directory": "/mnt/e/cxx_study/build/example",
+  "command": "/usr/bin/g++   -I/mnt/e/cxx_study/include  -g -g   -o CMakeFiles/exam.dir/fileclient.cc.o -c /mnt/e/cxx_study/example/fileclient.cc",
+  "file": "/mnt/e/cxx_study/example/fileclient.cc"
+},
+{
+  "directory": "/mnt/e/cxx_study/build/example",
+  "command": "/usr/bin/g++   -I/mnt/e/cxx_study/include  -g -g   -o CMakeFiles/exam.dir/fileserver.cc.o -c /mnt/e/cxx_study/example/fileserver.cc",
+  "file": "/mnt/e/cxx_study/example/fileserver.cc"
+}
+]

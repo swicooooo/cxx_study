@@ -1,0 +1,8 @@
+/mnt/e/cxx_study/build/CMakeFiles/rebuild_cache.dir
+/mnt/e/cxx_study/build/CMakeFiles/edit_cache.dir
+/mnt/e/cxx_study/build/src/CMakeFiles/rebuild_cache.dir
+/mnt/e/cxx_study/build/src/CMakeFiles/edit_cache.dir
+/mnt/e/cxx_study/build/src/CMakeFiles/main.dir
+/mnt/e/cxx_study/build/example/CMakeFiles/rebuild_cache.dir
+/mnt/e/cxx_study/build/example/CMakeFiles/edit_cache.dir
+/mnt/e/cxx_study/build/example/CMakeFiles/exam.dir

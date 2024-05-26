@@ -2,12 +2,11 @@
 
 #include <mymuduo/Logger.h>
 
-static std::string server = "127.0.0.1";
-static std::string user = "root";
-static std::string password = "0";
-static std::string dbname = "chat";
-
-MySQL::MySQL()
+MySQL::MySQL(std::string server, std::string user, std::string password, std::string dbname)
+    :   server_(server),
+        user_(user),
+        password_(password),
+        dbname_(dbname)
 {
     conn_ = mysql_init(nullptr);    // nor not mysql_init(conn_)
 }
@@ -22,7 +21,7 @@ MySQL::~MySQL()
 
 bool MySQL::connect()
 {
-    MYSQL *p = mysql_real_connect(conn_,server.c_str(),user.c_str(),password.c_str(),dbname.c_str(),3306,nullptr,0);
+    MYSQL *p = mysql_real_connect(conn_,server_.c_str(),user_.c_str(),password_.c_str(),dbname_.c_str(),3306,nullptr,0);
     if(p == nullptr) 
     {
         LOG_ERROR("%s:%d: mysql connect error",__FILE__,__LINE__);
