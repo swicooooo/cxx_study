@@ -66,3 +66,9 @@ struct TransferFile
     int blockno;
     char content[BLOCK_SIZE];
 };
+
+// 传输文件响应
+struct TransferFileAck
+{
+    char flag;
+};

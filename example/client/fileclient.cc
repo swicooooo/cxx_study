@@ -6,11 +6,6 @@
 
 int main(int argc, char const *argv[])
 {
-    if (argc < 2)
-    {
-        printf("usage: ./command path!\n");
-        exit(-1);
-    }
     int ret;
     int sockfd =socket(AF_INET, SOCK_STREAM, 0);
 
@@ -26,7 +21,7 @@ int main(int argc, char const *argv[])
     printf("connect fileserver success!\n");
 
     filetransferClient client;
-    client.uploadFile(sockfd, argv[1]);
+    client.uploadFile(sockfd, "./doc/hello.txt");
 
     return 0;
 }

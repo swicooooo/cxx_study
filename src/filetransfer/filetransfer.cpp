@@ -35,7 +35,7 @@ int filetransfer::recvPacket(int sockfd, void *buf, int size)
 
 filetransferServer::filetransferServer()
 {
-    mysql_ = std::make_unique<MySQL>(MySQL("file"));
+    // TODO redis中间存储
 }
 
 /**
@@ -46,7 +46,6 @@ filetransferServer::filetransferServer()
  *          state == '0'                断点续传
  * */
 void filetransferServer::processUpload(int clientfd, struct DataPacket *dp)
-
 {
     clientfd_ = clientfd;   //TODO
     // 从data中解析为客户端传来的UploadFile
@@ -63,7 +62,8 @@ void filetransferServer::processUpload(int clientfd, struct DataPacket *dp)
         CheckErr(ret_, "sendPacket err!");
         return;
     }
-    printf("filePath: %s\n", filePath_.c_str());
+
+    printf("the filePath of client upload : %s\n", filePath_.c_str());
 
     // 记录上传文件信息
     path_ = filePath_.substr(0, idx+1);
@@ -72,9 +72,7 @@ void filetransferServer::processUpload(int clientfd, struct DataPacket *dp)
     md5_ = uploadFile.md5;
 
     // 查询数据库关于文件的信息
-    char sql[1024] = {0};
-    snprintf(sql, 1024, "select state,md5,blockno from file where name='%s' and path='%s'", name_.c_str(), path_.c_str());
-    auto vec = this->queryFileInfo(sql);
+    auto vec = this->queryFileInfo("");
 
     // 通知客户端接下来发送的块号
     this->instructClientSendBlock(clientfd, vec, uploadFile);
@@ -89,30 +87,18 @@ void filetransferServer::processUpload(int clientfd, struct DataPacket *dp)
 
 std::vector<std::string> filetransferServer::queryFileInfo(const char *sql)
 {
-    std::vector<std::string> vec{};
-    MYSQL_RES *res = mysql_->query(sql);
-    if(res != nullptr) {
-        MYSQL_ROW row = mysql_fetch_row(res);
-        if(row != nullptr)  {
-            vec.push_back(row[0]);  // state
-            vec.push_back(row[1]);  // md5
-            vec.push_back(row[2]);  // blockno
-            printf("queryFileInfo: state: %s,md5: %s,blockno: %s\n", row[0], row[1], row[2]);
-            mysql_free_result(res);
-        }
-    }
-    return vec;
+    return std::vector<std::string>();
 }
 
 void filetransferServer::instructClientSendBlock(int clientfd, const std::vector<std::string> &vec, const struct UploadFile &uploadFile)
 {
     if(vec.empty())
     {
-        printf("transfer: normal\n");
         // 普传 blockno：0
         struct UploadFileAck ack;
         ack.type = TYPE_NORMAL;
         ack.blockno = 0;
+        printf("transfer: normal\n");
         ret_ = sendPacket(clientfd, TYPE_ACK, (void*)&ack, sizeof(ack));
         CheckErr(ret_, "sendPacket err!");
     }
@@ -122,19 +108,19 @@ void filetransferServer::instructClientSendBlock(int clientfd, const std::vector
         if(vec[0] == "1" && vec[1] == uploadFile.md5)
         {
             // 秒传
-            printf("transfer: quick\n");
             struct UploadFileAck ack;
             ack.type = TYPE_QUICK;
+            printf("transfer: quick\n");
             ret_ = sendPacket(clientfd, TYPE_ACK, (void*)&ack, sizeof(ack));
             CheckErr(ret_, "sendPacket err!");
         }
         else if(vec[0] == "1" && vec[1] != uploadFile.md5)
         {
             // 普传，名称一致但是不同文件
-            printf("transfer: normal will be modified name\n");
             struct UploadFileAck ack;
             ack.type = TYPE_NORMAL;
             ack.blockno = 0;   
+            printf("transfer: normal will be modified name\n");
             ret_ = sendPacket(clientfd, TYPE_ACK, (void*)&ack, sizeof(ack));
             CheckErr(ret_, "sendPacket err!");
             name_ += "-md5";     // 重写文件名
@@ -142,10 +128,10 @@ void filetransferServer::instructClientSendBlock(int clientfd, const std::vector
         else
         {
             // 断点续传, 不完整数据
-            printf("transfer: breakpoint continue\n");
             struct UploadFileAck ack;
             ack.type = TYPE_NORMAL;
             ack.blockno = atoi(vec[2].c_str())+1;
+            printf("transfer: breakpoint continue\n");
             ret_ = sendPacket(clientfd, TYPE_ACK, (void*)&ack, sizeof(ack));
             CheckErr(ret_, "sendPacket err!");
         }
@@ -155,15 +141,15 @@ void filetransferServer::instructClientSendBlock(int clientfd, const std::vector
 void filetransferServer::recvClientSendBlock(uint64_t &recvsize)
 {
     // 根据文件是否有内容改变打开方式
-    int filefd = access(filePath_.c_str(), F_OK)==0?
-                open(filePath_.c_str(), O_APPEND | O_RDWR):
-                open(filePath_.c_str(), O_CREAT | O_RDWR | O_APPEND);
+    int filefd = access(name_.c_str(), F_OK)==0?
+                open(name_.c_str(), O_APPEND | O_RDWR):
+                open(name_.c_str(), O_CREAT | O_RDWR);
 	CheckErr(filefd, "open err");
 
     // 开始循环接收DataPacket(附带TransferFile长度)
-    const int size = sizeof(DataPacket) + sizeof(TransferFile);
+    const int size = sizeof(struct DataPacket) + sizeof(TransferFile);
     char recvbuf[size] = {0};
-    while (1)
+    while (recvsize < filesize_)
     {
         ret_ = recvPacket(clientfd_, recvbuf, size);
         CheckErr(ret_, "recvPacket err");
@@ -175,83 +161,38 @@ void filetransferServer::recvClientSendBlock(uint64_t &recvsize)
         // 将客户端发来的包进行转换
         DataPacket *dp = (DataPacket*)recvbuf;
         TransferFile *tfile = (TransferFile*)dp->data;
-        int writesize = dp->datalen - sizeof(int);  // datalen存的是TransferFile的长度,需减去int的长度
-        ret_ = write(filefd, dp->data, writesize);
+        // datalen存的是TransferFile的长度,需减去int的长度
+        // 并且存储在dp->data中，所以写的时候需要偏移4个字节
+        uint64_t writesize = dp->datalen - sizeof(int);  
+        ret_ = write(filefd, dp->data + sizeof(int), writesize);  
         CheckErr(ret_, "write err");
 
         // 记录, 可选返回ack进度
-        blocknum_++;
         recvsize += writesize;
-
-        printf("recvsize: %ld, filesize: %ld", recvsize, filesize_);
-        if(recvsize == filesize_)
-        {
-            // 接收完成
-            break;
-        }
+        printf("write fd recvsize: %ld, filesize: %ld\n", recvsize, filesize_);
     }
     close(filefd);
 }
 
 void filetransferServer::updateFileState(uint64_t &recvsize, const std::vector<std::string> &vec)
 {
-    char sql[1024] = {0};
-    // 完全接收，校验完md5后向客户端发送ack提示
+    // 
+    struct TransferFileAck transferFileAck;
     if(recvsize == filesize_)
     {
-        // 使用openssl的MD5加密与客户端发来的MD5对比
-        unsigned char gmd5[16] = {0};
-        MD5((const unsigned char*)filePath_.c_str(), filePath_.length(), gmd5);
-
-        // MD5相同，响应ack文件传输成功
-        if((memcmp(gmd5, md5_.c_str(), 16)) == 0)
-        {
-            // 如果数据库存在数据则更新数据，否则插入新数据
-            if(vec.empty())
-            {
-                snprintf(sql, 1024, "insert into file(name, path, md5, state, blockno) values('%s', '%s', '%s', '%s', %d)",
-					name_.c_str(), path_.c_str(), md5_.c_str(), "1", blocknum_);
-            }
-            else
-            {
-                snprintf(sql, 1024, "update file set state='1',blockno=%d where name='%s' and path='%s'",
-					blocknum_, name_.c_str(), path_.c_str());
-            }
-            mysql_->update(sql);
-            ret_ = sendPacket(clientfd_, TYPE_ACK, (void*)"ok", strlen("ok"));
-            CheckErr(ret_, "SendPacket err");
-            printf("updateFileState: success to update or insert info to db!\n");
-        }
-        else
-        {
-            // MD5不相同，响应ack文件传输失败，删除本地文件
-            ret_ = sendPacket(clientfd_, TYPE_ACK, (void*)"fail", strlen("fail"));
-            CheckErr(ret_, "SendPacket err");
-            printf("updateFileState: fail to update or insert info to db!\n");
-        }
+        transferFileAck.flag = '1';
     }
     else
     {
-        // 不完全接收，因为clientfd中断提前跳出
-		if (vec.empty())
-		{
-			snprintf(sql, 1024, "insert into file values(name, path, md5, state, blockno) values('%s', '%s', '%s', '%s', %d)",
-					name_.c_str(), path_.c_str(), md5_.c_str(), "0", blocknum_);
-		}
-        else
-		{   
-            // 如果存在更新blockno(ps:state="0")
-			snprintf(sql, 1024, "update file set blockno=%d where name='%s' and path='%s'"
-				,blocknum_, name_.c_str(), path_.c_str());
-		}
-        mysql_->update(sql);
-        printf("updateFileState: transfer incomletedly!\n");
+        transferFileAck.flag = '0';
     }
+    ret_ = sendPacket(clientfd_, TYPE_UPLOAD, (void*)&transferFileAck, sizeof(transferFileAck));
+    CheckErr(ret_, "SendPacket err");
 }
 
 void filetransferClient::uploadFile(int sockfd, const std::string &path)
 {
-     printf("uploadFile start...!\n");
+    printf("uploadFile start...!\n");
     sockfd_ = sockfd;
     // 获取文件大小
     auto filesize = this->getFileSize(path);
@@ -265,6 +206,7 @@ void filetransferClient::uploadFile(int sockfd, const std::string &path)
     // 生成MD5
     unsigned char md5[16] = {0};
     MD5((const unsigned char*)path.c_str(), path.size(), md5);
+    printf("filesize: %ld, totalblock: %d, md5: %s!\n", filesize, totalblock, md5);
 
     // 发送上传文件的请求
     struct UploadFile uploadfile;
@@ -274,12 +216,12 @@ void filetransferClient::uploadFile(int sockfd, const std::string &path)
     ret_ = sendPacket(sockfd, TYPE_UPLOAD, (void*)&uploadfile, sizeof(struct UploadFile));
     CheckErr(ret_, "sendPacket err");
 
+    printf("sendPacket request upload success!\n");
+
     // 解析服务端传回的ack类型
     char buf[1024] = {0};
     ret_ = recvPacket(sockfd, buf, 1024);
     CheckErr(ret_, "RecvPacket err");
-
-    // 从DataPacket中取出服务端传递给客户端的数据
     struct DataPacket *dp = (DataPacket*)buf;
     struct UploadFileAck uploadfileack;
     memcpy(&uploadfileack, dp->data, dp->datalen);
@@ -323,11 +265,13 @@ void filetransferClient::sendBlockByType(const struct UploadFileAck &uploadfilea
             TransferFile tfile;
             tfile.blockno = num++;
             int readsize = read(filefd, tfile.content, BLOCK_SIZE);
-            int size = readsize < BLOCK_SIZE?sizeof(int)+readsize:sizeof(TransferFile);// 读到最后一块精确计算
+            // 计算放到DataPacket里面数据的长度
+            int size = readsize < BLOCK_SIZE?sizeof(int)+readsize:sizeof(TransferFile);
             ret_ = sendPacket(sockfd_, TYPE_UPLOAD, (void*)&tfile, size);
             CheckErr(ret_, "SendPacket err");
 
             // TODO 接受服务端反馈，显示进度
+            printf("progress: %d/%d, blocknum: %d\n", num, totalblock, num);
         }
         close(filefd);
 
@@ -336,12 +280,14 @@ void filetransferClient::sendBlockByType(const struct UploadFileAck &uploadfilea
         ret_ = recvPacket(sockfd_, buf, 1024);
         CheckErr(ret_, "RecvPacket err");
         DataPacket *dp = (DataPacket*)buf;
+        TransferFileAck transferFileAck;
+        memcpy(&transferFileAck, dp->data, dp->datalen);
 
         // 打印文件传输结果
-        res = strncmp(dp->data, "ok", 2)?
+        res = transferFileAck.flag == '1'?
                             "file transfer was completed!":
                             "file transfer was occurred error!";
-        printf("file message: %s", res.c_str());
+        printf("file message: %s\n", res.c_str());
         break;
     }
 }

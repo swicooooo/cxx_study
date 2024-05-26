@@ -45,7 +45,7 @@ int main(int argc, char const *argv[])
         }
         char buffer[1024] = {0};
         // 开启一个线程处理通信
-        // std::thread([&](){
+        std::thread([&](){
             while (1)
             {
                 // 接受客户端发来的请求
@@ -73,7 +73,7 @@ int main(int argc, char const *argv[])
                     break;
                 }
             }
-        // }).detach();
+        }).detach();
     }
     close(sockfd);
     printf("fileserver quit!\n");

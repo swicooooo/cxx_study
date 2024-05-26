@@ -39,7 +39,7 @@ private:
     void instructClientSendBlock(int clientfd, const std::vector<std::string> &vec,  const struct UploadFile &uploadFile);
     void recvClientSendBlock(uint64_t &recvsize);
     void updateFileState(uint64_t &recvsize, const std::vector<std::string> &vec);
-    std::unique_ptr<MySQL> mysql_;
+    
     int ret_;                // 通用linux服务调用返回值
     int clientfd_;          // 通信的客户端fd
     std::string filePath_;  // 完整文件路径
