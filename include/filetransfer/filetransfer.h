@@ -38,7 +38,7 @@ public:
     void processUpload(int clientfd, struct DataPacket *dp);    // 处理文件上传函数
 private:
     std::vector<std::string> queryFileInfo(const char *sql);
-    void instructClientSendBlock(int clientfd, const std::vector<std::string> &vec,  const struct UploadFile &uploadFile);
+    bool instructClientSendBlock(int clientfd, const std::vector<std::string> &vec,  const struct UploadFile &uploadFile);
     void recvClientSendBlock(uint64_t &recvsize);
     void updateFileState(uint64_t &recvsize, const std::vector<std::string> &vec);
     MySQL *mysql_;                      // mysql处理句柄

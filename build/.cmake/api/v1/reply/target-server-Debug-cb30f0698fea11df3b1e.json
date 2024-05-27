@@ -91,15 +91,11 @@
 				"role" : "flags"
 			},
 			{
-				"fragment" : "-L/mnt/e/cxx_study/lib",
-				"role" : "libraryPath"
-			},
-			{
 				"fragment" : "-Wl,-rpath,/mnt/e/cxx_study/lib",
 				"role" : "libraries"
 			},
 			{
-				"fragment" : "-lutils",
+				"fragment" : "../../../lib/libutils.so",
 				"role" : "libraries"
 			},
 			{

@@ -86,7 +86,10 @@ void filetransferServer::processUpload(int clientfd, struct DataPacket *dp)
     auto vec = this->queryFileInfo(sql);
 
     // 通知客户端接下来发送的块号
-    this->instructClientSendBlock(clientfd, vec, uploadFile);
+    if(!this->instructClientSendBlock(clientfd, vec, uploadFile))
+    {
+        return;     // 秒传通知，直接返回
+    }
     
     // 通知完客户端，开始接收文件
     uint64_t recvsize = 0;
@@ -112,7 +115,7 @@ std::vector<std::string> filetransferServer::queryFileInfo(const char *sql)
     return vec;
 }
 
-void filetransferServer::instructClientSendBlock(int clientfd, const std::vector<std::string> &vec, const struct UploadFile &uploadFile)
+bool filetransferServer::instructClientSendBlock(int clientfd, const std::vector<std::string> &vec, const struct UploadFile &uploadFile)
 {
     if(vec.empty())
     {
@@ -126,7 +129,7 @@ void filetransferServer::instructClientSendBlock(int clientfd, const std::vector
     }
     else 
     {
-        printf("state: %s, md5: %s", vec[0].c_str(), vec[1].c_str());
+        printf("state: %s, md5: %s\n", vec[0].c_str(), vec[1].c_str());
         if(vec[0] == "1" && vec[1] == (char*)uploadFile.md5)
         {
             // 秒传
@@ -135,6 +138,7 @@ void filetransferServer::instructClientSendBlock(int clientfd, const std::vector
             printf("transfer: quick\n");
             ret_ = sendPacket(clientfd, TYPE_ACK, (void*)&ack, sizeof(ack));
             CheckErr(ret_, "sendPacket err!");
+            return false;
         }
         else if(vec[0] == "1" && vec[1] != (char*)uploadFile.md5)
         {
@@ -158,6 +162,7 @@ void filetransferServer::instructClientSendBlock(int clientfd, const std::vector
             CheckErr(ret_, "sendPacket err!");
         }
     }
+    return true;
 }
 
 void filetransferServer::recvClientSendBlock(uint64_t &recvsize)
@@ -307,7 +312,7 @@ void filetransferClient::sendBlockByType(const struct UploadFileAck &uploadfilea
     {
     case TYPE_QUICK:
         // 快传
-        printf("quick upload was already completed!");
+        printf("quick upload was already completed!\n");
         break;
     case TYPE_NORMAL:
         // 普传，根据服务端返回的blocknum移动filefd的读指针

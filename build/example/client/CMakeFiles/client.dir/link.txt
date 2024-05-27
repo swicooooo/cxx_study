@@ -1,1 +1,1 @@
-/usr/bin/g++  -g -g   CMakeFiles/client.dir/fileclient.cc.o  -o ../../../bin/client   -L/mnt/e/cxx_study/lib  -Wl,-rpath,/mnt/e/cxx_study/lib -lutils 
+/usr/bin/g++  -g -g   CMakeFiles/client.dir/fileclient.cc.o  -o ../../../bin/client  -Wl,-rpath,/mnt/e/cxx_study/lib ../../../lib/libutils.so 

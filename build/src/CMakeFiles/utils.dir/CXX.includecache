@@ -44,6 +44,12 @@ string
 sstream
 -
 
+/mnt/e/cxx_study/src/database/mysql.cpp
+database/mysql.h
+/mnt/e/cxx_study/src/database/database/mysql.h
+mymuduo/Logger.h
+-
+
 /mnt/e/cxx_study/src/filetransfer/filetransfer.cpp
 filetransfer/filetransfer.h
 /mnt/e/cxx_study/src/filetransfer/filetransfer/filetransfer.h
@@ -63,4 +69,8 @@ openssl/md5.h
 -
 sstream
 -
+
+/mnt/e/cxx_study/src/utils/md5.cpp
+utils/md5.h
+/mnt/e/cxx_study/src/utils/utils/md5.h
 
