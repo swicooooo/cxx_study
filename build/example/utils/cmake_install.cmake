@@ -1,4 +1,4 @@
-# Install script for directory: /mnt/e/cxx_study/example/database
+# Install script for directory: /mnt/e/cxx_study/example/utils
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

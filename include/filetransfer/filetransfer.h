@@ -48,7 +48,7 @@ private:
     std::string path_;                  // 文件路径(不包含文件名)
     std::string name_;                  // 文件名
     uint64_t filesize_;                 // 文件大小
-    unsigned char md5_[33];             // 文件的md5
+    std::string md5_;                   // 文件的md5
     int blocknum_;                      // 文件的块号
 };
 

@@ -1,1 +1,1 @@
-/usr/bin/g++  -g -g   CMakeFiles/server.dir/fileserver.cc.o  -o ../../../bin/server  -Wl,-rpath,/mnt/e/cxx_study/lib ../../../lib/libutils.so -lpthread 
+/usr/bin/g++  -g -g   CMakeFiles/server.dir/fileserver.cc.o  -o ../../../bin/server   -L/mnt/e/cxx_study/lib  -Wl,-rpath,/mnt/e/cxx_study/lib -lutils -lpthread 

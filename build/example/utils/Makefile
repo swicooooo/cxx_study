@@ -56,17 +56,6 @@ CMAKE_BINARY_DIR = /mnt/e/cxx_study/build
 #=============================================================================
 # Targets provided globally by CMake.
 
-# Special rule for the target edit_cache
-edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
-.PHONY : edit_cache
-
-# Special rule for the target edit_cache
-edit_cache/fast: edit_cache
-
-.PHONY : edit_cache/fast
-
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
@@ -78,16 +67,27 @@ rebuild_cache/fast: rebuild_cache
 
 .PHONY : rebuild_cache/fast
 
+# Special rule for the target edit_cache
+edit_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
+	/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+.PHONY : edit_cache
+
+# Special rule for the target edit_cache
+edit_cache/fast: edit_cache
+
+.PHONY : edit_cache/fast
+
 # The main all target
 all: cmake_check_build_system
-	cd /mnt/e/cxx_study/build && $(CMAKE_COMMAND) -E cmake_progress_start /mnt/e/cxx_study/build/CMakeFiles /mnt/e/cxx_study/build/example/database/CMakeFiles/progress.marks
-	cd /mnt/e/cxx_study/build && $(MAKE) -f CMakeFiles/Makefile2 example/database/all
+	cd /mnt/e/cxx_study/build && $(CMAKE_COMMAND) -E cmake_progress_start /mnt/e/cxx_study/build/CMakeFiles /mnt/e/cxx_study/build/example/utils/CMakeFiles/progress.marks
+	cd /mnt/e/cxx_study/build && $(MAKE) -f CMakeFiles/Makefile2 example/utils/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/e/cxx_study/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /mnt/e/cxx_study/build && $(MAKE) -f CMakeFiles/Makefile2 example/database/clean
+	cd /mnt/e/cxx_study/build && $(MAKE) -f CMakeFiles/Makefile2 example/utils/clean
 .PHONY : clean
 
 # The main clean target
@@ -97,12 +97,12 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /mnt/e/cxx_study/build && $(MAKE) -f CMakeFiles/Makefile2 example/database/preinstall
+	cd /mnt/e/cxx_study/build && $(MAKE) -f CMakeFiles/Makefile2 example/utils/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /mnt/e/cxx_study/build && $(MAKE) -f CMakeFiles/Makefile2 example/database/preinstall
+	cd /mnt/e/cxx_study/build && $(MAKE) -f CMakeFiles/Makefile2 example/utils/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
@@ -111,19 +111,19 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
-example/database/CMakeFiles/dbTest.dir/rule:
-	cd /mnt/e/cxx_study/build && $(MAKE) -f CMakeFiles/Makefile2 example/database/CMakeFiles/dbTest.dir/rule
-.PHONY : example/database/CMakeFiles/dbTest.dir/rule
+example/utils/CMakeFiles/Test.dir/rule:
+	cd /mnt/e/cxx_study/build && $(MAKE) -f CMakeFiles/Makefile2 example/utils/CMakeFiles/Test.dir/rule
+.PHONY : example/utils/CMakeFiles/Test.dir/rule
 
 # Convenience name for target.
-dbTest: example/database/CMakeFiles/dbTest.dir/rule
+Test: example/utils/CMakeFiles/Test.dir/rule
 
-.PHONY : dbTest
+.PHONY : Test
 
 # fast build rule for target.
-dbTest/fast:
-	cd /mnt/e/cxx_study/build && $(MAKE) -f example/database/CMakeFiles/dbTest.dir/build.make example/database/CMakeFiles/dbTest.dir/build
-.PHONY : dbTest/fast
+Test/fast:
+	cd /mnt/e/cxx_study/build && $(MAKE) -f example/utils/CMakeFiles/Test.dir/build.make example/utils/CMakeFiles/Test.dir/build
+.PHONY : Test/fast
 
 dbTest.o: dbTest.cc.o
 
@@ -131,7 +131,7 @@ dbTest.o: dbTest.cc.o
 
 # target to build an object file
 dbTest.cc.o:
-	cd /mnt/e/cxx_study/build && $(MAKE) -f example/database/CMakeFiles/dbTest.dir/build.make example/database/CMakeFiles/dbTest.dir/dbTest.cc.o
+	cd /mnt/e/cxx_study/build && $(MAKE) -f example/utils/CMakeFiles/Test.dir/build.make example/utils/CMakeFiles/Test.dir/dbTest.cc.o
 .PHONY : dbTest.cc.o
 
 dbTest.i: dbTest.cc.i
@@ -140,7 +140,7 @@ dbTest.i: dbTest.cc.i
 
 # target to preprocess a source file
 dbTest.cc.i:
-	cd /mnt/e/cxx_study/build && $(MAKE) -f example/database/CMakeFiles/dbTest.dir/build.make example/database/CMakeFiles/dbTest.dir/dbTest.cc.i
+	cd /mnt/e/cxx_study/build && $(MAKE) -f example/utils/CMakeFiles/Test.dir/build.make example/utils/CMakeFiles/Test.dir/dbTest.cc.i
 .PHONY : dbTest.cc.i
 
 dbTest.s: dbTest.cc.s
@@ -149,7 +149,7 @@ dbTest.s: dbTest.cc.s
 
 # target to generate assembly for a file
 dbTest.cc.s:
-	cd /mnt/e/cxx_study/build && $(MAKE) -f example/database/CMakeFiles/dbTest.dir/build.make example/database/CMakeFiles/dbTest.dir/dbTest.cc.s
+	cd /mnt/e/cxx_study/build && $(MAKE) -f example/utils/CMakeFiles/Test.dir/build.make example/utils/CMakeFiles/Test.dir/dbTest.cc.s
 .PHONY : dbTest.cc.s
 
 # Help Target
@@ -158,9 +158,9 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
-	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... dbTest"
+	@echo "... edit_cache"
+	@echo "... Test"
 	@echo "... dbTest.o"
 	@echo "... dbTest.i"
 	@echo "... dbTest.s"

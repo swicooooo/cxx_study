@@ -1,4 +1,5 @@
 #include "filetransfer/filetransfer.h"
+#include "utils/md5.h"
 
 #include <string>
 #include <vector>
@@ -76,7 +77,7 @@ void filetransferServer::processUpload(int clientfd, struct DataPacket *dp)
     path_ = filePath_.substr(0, idx+1);
     name_ = filePath_.substr(idx+1);
     filesize_ = uploadFile.filesize;
-    memcpy(md5_, uploadFile.md5, 33);
+    md5_ = uploadFile.md5;
 
     // 查询数据库关于文件的信息
     char sql[1024] = {0};
@@ -161,7 +162,7 @@ void filetransferServer::instructClientSendBlock(int clientfd, const std::vector
 
 void filetransferServer::recvClientSendBlock(uint64_t &recvsize)
 {
-    // 根据文件是否有内容改变打开方式
+    // 根据文件是否有内容改变打开方式,fixbug: 多进程打开文件or多线程
     int filefd = access(name_.c_str(), F_OK)==0?
                 open(name_.c_str(), O_APPEND | O_RDWR):
                 open(name_.c_str(), O_CREAT | O_RDWR);
@@ -204,15 +205,14 @@ void filetransferServer::updateFileState(uint64_t &recvsize, const std::vector<s
     {
         // 重新生成该文件的md5值，与客户端携带的md5对比
         // md5相同，响应ack文件传输成功
-        unsigned char gmd5[16];
-        MD5((const unsigned char*)filePath_.c_str(), filePath_.length(), gmd5);
-        if (memcmp(md5_, gmd5, 33) == 0)
+        std::string gmd5 = MD5::instance().md5(filePath_);
+        if (gmd5.compare(md5_) == 0)
         {
             // 数据库不存在数据，插入新的数据
             if (vec.empty())
             {
 				snprintf(sql, 1024, "insert into file(name, path, md5, state, blockno) values('%s', '%s', '%s', '%s', %d)",
-					name_.c_str(), path_.c_str(),md5_, "1", blocknum_);
+					name_.c_str(), path_.c_str(),md5_.c_str(), "1", blocknum_);
             }
             else
             {
@@ -238,7 +238,7 @@ void filetransferServer::updateFileState(uint64_t &recvsize, const std::vector<s
 		if (vec.empty())
 		{
 			snprintf(sql, 1024, "insert into file values(name, path, md5, state, blockno) values('%s', '%s', '%s', '%s', %d)",
-					name_.c_str(), path_.c_str(), md5_, "0", blocknum_);
+					name_.c_str(), path_.c_str(), md5_.c_str(), "0", blocknum_);
 		}
         else
 		{
@@ -263,15 +263,14 @@ void filetransferClient::uploadFile(int sockfd, const std::string &path)
         totalblock++;
     }
     // 生成MD5
-    unsigned char md5[33] = {0};
-    MD5((const unsigned char*)path.c_str(), path.size(), md5);
-    printf("filesize: %ld, totalblock: %d, md5: %s!\n", filesize, totalblock, (char*)md5);
+    std::string md5 = MD5::instance().md5(path);
+    printf("filesize: %ld, totalblock: %d, md5: %s!\n", filesize, totalblock, md5.c_str());
 
     // 发送上传文件的请求
     struct UploadFile uploadfile;
     strcpy(uploadfile.filepath, path.c_str());
     uploadfile.filesize = filesize;
-    memcpy(uploadfile.md5, md5, 33);
+    memcpy(uploadfile.md5, md5.c_str(), md5.length());
     ret_ = sendPacket(sockfd, TYPE_UPLOAD, (void*)&uploadfile, sizeof(struct UploadFile));
     CheckErr(ret_, "sendPacket err");
 

@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/mnt/e/cxx_study/example/database/dbTest.cc" "/mnt/e/cxx_study/build/example/database/CMakeFiles/dbTest.dir/dbTest.cc.o"
+  "/mnt/e/cxx_study/example/utils/dbTest.cc" "/mnt/e/cxx_study/build/example/utils/CMakeFiles/Test.dir/dbTest.cc.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
