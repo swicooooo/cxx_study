@@ -10,6 +10,11 @@
   "file": "/mnt/e/cxx_study/src/filetransfer/filetransfer.cpp"
 },
 {
+  "directory": "/mnt/e/cxx_study/build/src",
+  "command": "/usr/bin/g++  -Dutils_EXPORTS -I/mnt/e/cxx_study/include  -g -g -fPIC   -o CMakeFiles/utils.dir/utils/md5.cpp.o -c /mnt/e/cxx_study/src/utils/md5.cpp",
+  "file": "/mnt/e/cxx_study/src/utils/md5.cpp"
+},
+{
   "directory": "/mnt/e/cxx_study/build/example/client",
   "command": "/usr/bin/g++   -I/mnt/e/cxx_study/include  -g -g   -o CMakeFiles/client.dir/fileclient.cc.o -c /mnt/e/cxx_study/example/client/fileclient.cc",
   "file": "/mnt/e/cxx_study/example/client/fileclient.cc"
@@ -18,10 +23,5 @@
   "directory": "/mnt/e/cxx_study/build/example/server",
   "command": "/usr/bin/g++   -I/mnt/e/cxx_study/include  -g -g   -o CMakeFiles/server.dir/fileserver.cc.o -c /mnt/e/cxx_study/example/server/fileserver.cc",
   "file": "/mnt/e/cxx_study/example/server/fileserver.cc"
-},
-{
-  "directory": "/mnt/e/cxx_study/build/example/database",
-  "command": "/usr/bin/g++   -I/mnt/e/cxx_study/include  -g -g   -o CMakeFiles/dbTest.dir/dbTest.cc.o -c /mnt/e/cxx_study/example/database/dbTest.cc",
-  "file": "/mnt/e/cxx_study/example/database/dbTest.cc"
 }
 ]

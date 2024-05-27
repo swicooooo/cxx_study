@@ -9,3 +9,6 @@ src/CMakeFiles/utils.dir/filetransfer/filetransfer.cpp.o: ../include/filetransfe
 src/CMakeFiles/utils.dir/filetransfer/filetransfer.cpp.o: ../include/filetransfer/public.h
 src/CMakeFiles/utils.dir/filetransfer/filetransfer.cpp.o: ../src/filetransfer/filetransfer.cpp
 
+src/CMakeFiles/utils.dir/utils/md5.cpp.o: ../include/utils/md5.h
+src/CMakeFiles/utils.dir/utils/md5.cpp.o: ../src/utils/md5.cpp
+

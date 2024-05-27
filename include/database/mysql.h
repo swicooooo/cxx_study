@@ -2,6 +2,7 @@
 
 #include <string>
 #include <mysql/mysql.h>
+#include <memory>
 
 // 用代码访问mysql会出现无法访问root用户，直接创建新用户即可
 class MySQL

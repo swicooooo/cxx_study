@@ -690,9 +690,6 @@
 		},
 		{
 			"path" : "example/server/CMakeLists.txt"
-		},
-		{
-			"path" : "example/database/CMakeLists.txt"
 		}
 	],
 	"kind" : "cmakeFiles",

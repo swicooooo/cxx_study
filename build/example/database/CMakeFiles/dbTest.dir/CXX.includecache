@@ -11,6 +11,8 @@ string
 -
 mysql/mysql.h
 -
+memory
+-
 
 /mnt/e/cxx_study/example/database/dbTest.cc
 database/mysql.h

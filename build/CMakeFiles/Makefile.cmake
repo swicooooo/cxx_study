@@ -13,7 +13,6 @@ set(CMAKE_MAKEFILE_DEPENDS
   "CMakeFiles/3.16.3/CMakeSystem.cmake"
   "../example/CMakeLists.txt"
   "../example/client/CMakeLists.txt"
-  "../example/database/CMakeLists.txt"
   "../example/server/CMakeLists.txt"
   "../src/CMakeLists.txt"
   "/usr/share/cmake-3.16/Modules/CMakeCCompiler.cmake.in"
@@ -121,7 +120,6 @@ set(CMAKE_MAKEFILE_PRODUCTS
   "example/CMakeFiles/CMakeDirectoryInformation.cmake"
   "example/client/CMakeFiles/CMakeDirectoryInformation.cmake"
   "example/server/CMakeFiles/CMakeDirectoryInformation.cmake"
-  "example/database/CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
 # Dependency information for all targets:
@@ -129,5 +127,4 @@ set(CMAKE_DEPEND_INFO_FILES
   "src/CMakeFiles/utils.dir/DependInfo.cmake"
   "example/client/CMakeFiles/client.dir/DependInfo.cmake"
   "example/server/CMakeFiles/server.dir/DependInfo.cmake"
-  "example/database/CMakeFiles/dbTest.dir/DependInfo.cmake"
   )

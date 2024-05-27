@@ -11,6 +11,8 @@ string
 -
 mysql/mysql.h
 -
+memory
+-
 
 ../include/filetransfer/filetransfer.h
 database/mysql.h

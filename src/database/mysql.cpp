@@ -33,7 +33,7 @@ bool MySQL::update(std::string sql)
 {
     if(mysql_query(conn_, sql.c_str())) 
     {
-        LOG_ERROR("%s:%d:%s update error",__FILE__,__LINE__,sql.c_str());
+        LOG_ERROR("%s:%d:%s update error: %s",__FILE__,__LINE__,sql.c_str(), mysql_error(conn_));
         return false;
     }
     return true;
@@ -43,7 +43,7 @@ MYSQL_RES *MySQL::query(std::string sql)
 {
     if(mysql_query(conn_, sql.c_str())) 
     {
-        LOG_ERROR("%s:%d:%s query error",__FILE__,__LINE__,sql.c_str());
+        LOG_ERROR("%s:%d:%s query error: %s",__FILE__,__LINE__,sql.c_str(), mysql_error(conn_));
         return nullptr;
     }
     return mysql_use_result(conn_);

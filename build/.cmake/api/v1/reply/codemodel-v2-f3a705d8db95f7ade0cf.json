@@ -29,7 +29,7 @@
 					"source" : "src",
 					"targetIndexes" : 
 					[
-						3
+						2
 					]
 				},
 				{
@@ -37,8 +37,7 @@
 					"childIndexes" : 
 					[
 						3,
-						4,
-						5
+						4
 					],
 					"minimumCMakeVersion" : 
 					{
@@ -73,20 +72,6 @@
 					"source" : "example/server",
 					"targetIndexes" : 
 					[
-						2
-					]
-				},
-				{
-					"build" : "example/database",
-					"minimumCMakeVersion" : 
-					{
-						"string" : "3.16.3"
-					},
-					"parentIndex" : 2,
-					"projectIndex" : 0,
-					"source" : "example/database",
-					"targetIndexes" : 
-					[
 						1
 					]
 				}
@@ -101,16 +86,14 @@
 						1,
 						2,
 						3,
-						4,
-						5
+						4
 					],
 					"name" : "project",
 					"targetIndexes" : 
 					[
 						0,
 						1,
-						2,
-						3
+						2
 					]
 				}
 			],
@@ -124,13 +107,6 @@
 					"projectIndex" : 0
 				},
 				{
-					"directoryIndex" : 5,
-					"id" : "dbTest::@887b65b118be8d0da4d7",
-					"jsonFile" : "target-dbTest-Debug-ae056903d91d146a74a7.json",
-					"name" : "dbTest",
-					"projectIndex" : 0
-				},
-				{
 					"directoryIndex" : 4,
 					"id" : "server::@9a75c32a50fbfe4920f2",
 					"jsonFile" : "target-server-Debug-cb30f0698fea11df3b1e.json",
@@ -140,7 +116,7 @@
 				{
 					"directoryIndex" : 1,
 					"id" : "utils::@145eef247bfb46b6828c",
-					"jsonFile" : "target-utils-Debug-31207cc4b48e8475271b.json",
+					"jsonFile" : "target-utils-Debug-9086f6dbbef776daf607.json",
 					"name" : "utils",
 					"projectIndex" : 0
 				}

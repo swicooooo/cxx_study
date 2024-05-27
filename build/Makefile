@@ -149,19 +149,6 @@ server/fast:
 	$(MAKE) -f example/server/CMakeFiles/server.dir/build.make example/server/CMakeFiles/server.dir/build
 .PHONY : server/fast
 
-#=============================================================================
-# Target rules for targets named dbTest
-
-# Build rule for target.
-dbTest: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 dbTest
-.PHONY : dbTest
-
-# fast build rule for target.
-dbTest/fast:
-	$(MAKE) -f example/database/CMakeFiles/dbTest.dir/build.make example/database/CMakeFiles/dbTest.dir/build
-.PHONY : dbTest/fast
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -173,7 +160,6 @@ help:
 	@echo "... utils"
 	@echo "... client"
 	@echo "... server"
-	@echo "... dbTest"
 .PHONY : help
 
 

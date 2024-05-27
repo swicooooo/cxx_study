@@ -6,6 +6,7 @@
 #include <stdint.h>
 #include <sys/socket.h>
 #include <openssl/md5.h>
+#include <sstream>
 
 int filetransfer::sendPacket(int sockfd, OperType t, void *data, int datalen)
 {
@@ -35,19 +36,25 @@ int filetransfer::recvPacket(int sockfd, void *buf, int size)
 
 filetransferServer::filetransferServer()
 {
-    // TODO redis中间存储
+    mysql_ = new MySQL("file");    // 在堆上创建指针
 }
 
-/**
- * 1. path+name 不存在  普传
- * 2. path+name 存在    
- *          state == '1' && md5 == md5  秒传
- *          state == '1' && md5 != md5  名字相同的普传
- *          state == '0'                断点续传
- * */
+filetransferServer::~filetransferServer()
+{
+    free(mysql_);
+} 
+
+ /**
+   * 1. path+name 不存在  普传
+   * 2. path+name 存在
+   *          state == '1' && md5 == md5  秒传
+   *          state == '1' && md5 != md5  名字相同的普传
+   *          state == '0'                断点续传
+   * */
 void filetransferServer::processUpload(int clientfd, struct DataPacket *dp)
 {
     clientfd_ = clientfd;   //TODO
+    mysql_->connect();      // 连接到数据库
     // 从data中解析为客户端传来的UploadFile
     struct UploadFile uploadFile;
     memcpy(&uploadFile, dp->data, dp->datalen);
@@ -69,10 +76,13 @@ void filetransferServer::processUpload(int clientfd, struct DataPacket *dp)
     path_ = filePath_.substr(0, idx+1);
     name_ = filePath_.substr(idx+1);
     filesize_ = uploadFile.filesize;
-    md5_ = uploadFile.md5;
+    memcpy(md5_, uploadFile.md5, 33);
 
     // 查询数据库关于文件的信息
-    auto vec = this->queryFileInfo("");
+    char sql[1024] = {0};
+    snprintf(sql, 1024, "select state,md5,blockno from file where name='%s' and path='%s'"
+        ,name_.c_str(), path_.c_str());
+    auto vec = this->queryFileInfo(sql);
 
     // 通知客户端接下来发送的块号
     this->instructClientSendBlock(clientfd, vec, uploadFile);
@@ -87,7 +97,18 @@ void filetransferServer::processUpload(int clientfd, struct DataPacket *dp)
 
 std::vector<std::string> filetransferServer::queryFileInfo(const char *sql)
 {
-    return std::vector<std::string>();
+    std::vector<std::string> vec;
+    MYSQL_RES *res = mysql_->query(sql);
+    if(res != nullptr) {
+        MYSQL_ROW row = mysql_fetch_row(res);
+        if(row != nullptr)  {
+            vec.push_back(row[0]);  // state
+            vec.push_back(row[1]);  // md5
+            vec.push_back(row[2]);  // blockno
+            mysql_free_result(res);
+        }
+    }
+    return vec;
 }
 
 void filetransferServer::instructClientSendBlock(int clientfd, const std::vector<std::string> &vec, const struct UploadFile &uploadFile)
@@ -105,7 +126,7 @@ void filetransferServer::instructClientSendBlock(int clientfd, const std::vector
     else 
     {
         printf("state: %s, md5: %s", vec[0].c_str(), vec[1].c_str());
-        if(vec[0] == "1" && vec[1] == uploadFile.md5)
+        if(vec[0] == "1" && vec[1] == (char*)uploadFile.md5)
         {
             // 秒传
             struct UploadFileAck ack;
@@ -114,7 +135,7 @@ void filetransferServer::instructClientSendBlock(int clientfd, const std::vector
             ret_ = sendPacket(clientfd, TYPE_ACK, (void*)&ack, sizeof(ack));
             CheckErr(ret_, "sendPacket err!");
         }
-        else if(vec[0] == "1" && vec[1] != uploadFile.md5)
+        else if(vec[0] == "1" && vec[1] != (char*)uploadFile.md5)
         {
             // 普传，名称一致但是不同文件
             struct UploadFileAck ack;
@@ -176,18 +197,56 @@ void filetransferServer::recvClientSendBlock(uint64_t &recvsize)
 
 void filetransferServer::updateFileState(uint64_t &recvsize, const std::vector<std::string> &vec)
 {
-    // 
+    char sql[1024] = {0};
     struct TransferFileAck transferFileAck;
-    if(recvsize == filesize_)
+    // 在数据库中记录 block 的信息
+    if (recvsize == filesize_)
     {
-        transferFileAck.flag = '1';
+        // 重新生成该文件的md5值，与客户端携带的md5对比
+        // md5相同，响应ack文件传输成功
+        unsigned char gmd5[16];
+        MD5((const unsigned char*)filePath_.c_str(), filePath_.length(), gmd5);
+        if (memcmp(md5_, gmd5, 33) == 0)
+        {
+            // 数据库不存在数据，插入新的数据
+            if (vec.empty())
+            {
+				snprintf(sql, 1024, "insert into file(name, path, md5, state, blockno) values('%s', '%s', '%s', '%s', %d)",
+					name_.c_str(), path_.c_str(),md5_, "1", blocknum_);
+            }
+            else
+            {
+                // 数据库存在数据，更新文件的状态
+                snprintf(sql, 1024, "update file set state='1',blockno=%d where name='%s' and path='%s'",
+					blocknum_, name_.c_str(), path_.c_str());
+            }
+            // 响应客户端
+            mysql_->update(sql);
+            transferFileAck.flag = '1';
+        }
+        else 
+        {
+            // md5不相同，传输出错，删除文件
+            transferFileAck.flag = '0';
+        }
+        ret_ = sendPacket(clientfd_, TYPE_UPLOAD, (void*)&transferFileAck, sizeof(transferFileAck));
+        CheckErr(ret_, "SendPacket err");
     }
     else
     {
-        transferFileAck.flag = '0';
+        // 数据传输中断，客户端断开连接,向数据库中记录已发送的blocknum
+		if (vec.empty())
+		{
+			snprintf(sql, 1024, "insert into file values(name, path, md5, state, blockno) values('%s', '%s', '%s', '%s', %d)",
+					name_.c_str(), path_.c_str(), md5_, "0", blocknum_);
+		}
+        else
+		{
+			snprintf(sql, 1024, "update file set blockno=%d where name='%s' and path='%s'"
+				,blocknum_, name_.c_str(), path_.c_str());
+		}
+        mysql_->update(sql);
     }
-    ret_ = sendPacket(clientfd_, TYPE_UPLOAD, (void*)&transferFileAck, sizeof(transferFileAck));
-    CheckErr(ret_, "SendPacket err");
 }
 
 void filetransferClient::uploadFile(int sockfd, const std::string &path)
@@ -204,15 +263,15 @@ void filetransferClient::uploadFile(int sockfd, const std::string &path)
         totalblock++;
     }
     // 生成MD5
-    unsigned char md5[16] = {0};
+    unsigned char md5[33] = {0};
     MD5((const unsigned char*)path.c_str(), path.size(), md5);
-    printf("filesize: %ld, totalblock: %d, md5: %s!\n", filesize, totalblock, md5);
+    printf("filesize: %ld, totalblock: %d, md5: %s!\n", filesize, totalblock, (char*)md5);
 
     // 发送上传文件的请求
     struct UploadFile uploadfile;
     strcpy(uploadfile.filepath, path.c_str());
     uploadfile.filesize = filesize;
-    memcpy(uploadfile.md5, md5, 16);
+    memcpy(uploadfile.md5, md5, 33);
     ret_ = sendPacket(sockfd, TYPE_UPLOAD, (void*)&uploadfile, sizeof(struct UploadFile));
     CheckErr(ret_, "sendPacket err");
 
@@ -291,3 +350,4 @@ void filetransferClient::sendBlockByType(const struct UploadFileAck &uploadfilea
         break;
     }
 }
+

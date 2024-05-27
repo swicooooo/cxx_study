@@ -11,6 +11,3 @@
 /mnt/e/cxx_study/build/example/server/CMakeFiles/rebuild_cache.dir
 /mnt/e/cxx_study/build/example/server/CMakeFiles/edit_cache.dir
 /mnt/e/cxx_study/build/example/server/CMakeFiles/server.dir
-/mnt/e/cxx_study/build/example/database/CMakeFiles/edit_cache.dir
-/mnt/e/cxx_study/build/example/database/CMakeFiles/rebuild_cache.dir
-/mnt/e/cxx_study/build/example/database/CMakeFiles/dbTest.dir

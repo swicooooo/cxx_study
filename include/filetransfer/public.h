@@ -50,7 +50,7 @@ struct UploadFile
 {
     char filepath[128];     // 文件路径
     uint64_t filesize;      // 文件大小
-    char md5[33];           // 32位的md5值
+    unsigned char md5[33];  // 32位的md5值
 };
 
 // 文件上传响应

@@ -179,6 +179,33 @@ filetransfer/filetransfer.cpp.s:
 	cd /mnt/e/cxx_study/build && $(MAKE) -f src/CMakeFiles/utils.dir/build.make src/CMakeFiles/utils.dir/filetransfer/filetransfer.cpp.s
 .PHONY : filetransfer/filetransfer.cpp.s
 
+utils/md5.o: utils/md5.cpp.o
+
+.PHONY : utils/md5.o
+
+# target to build an object file
+utils/md5.cpp.o:
+	cd /mnt/e/cxx_study/build && $(MAKE) -f src/CMakeFiles/utils.dir/build.make src/CMakeFiles/utils.dir/utils/md5.cpp.o
+.PHONY : utils/md5.cpp.o
+
+utils/md5.i: utils/md5.cpp.i
+
+.PHONY : utils/md5.i
+
+# target to preprocess a source file
+utils/md5.cpp.i:
+	cd /mnt/e/cxx_study/build && $(MAKE) -f src/CMakeFiles/utils.dir/build.make src/CMakeFiles/utils.dir/utils/md5.cpp.i
+.PHONY : utils/md5.cpp.i
+
+utils/md5.s: utils/md5.cpp.s
+
+.PHONY : utils/md5.s
+
+# target to generate assembly for a file
+utils/md5.cpp.s:
+	cd /mnt/e/cxx_study/build && $(MAKE) -f src/CMakeFiles/utils.dir/build.make src/CMakeFiles/utils.dir/utils/md5.cpp.s
+.PHONY : utils/md5.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -194,6 +221,9 @@ help:
 	@echo "... filetransfer/filetransfer.o"
 	@echo "... filetransfer/filetransfer.i"
 	@echo "... filetransfer/filetransfer.s"
+	@echo "... utils/md5.o"
+	@echo "... utils/md5.i"
+	@echo "... utils/md5.s"
 .PHONY : help
 
 
